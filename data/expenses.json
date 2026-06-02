@@ -1,1 +1,1 @@
-{"Id": 1, "Category": "Food", "Amount": "1000", "Description": "pizza", "Date": "2026-06-01"}
+[{"Id": 1, "Category": "Food", "Amount": "1234", "Description": "kfc", "Date": "2026-06-01"}, {"Id": 2, "Category": "Transport", "Amount": "2345", "Description": "train", "Date": "2026-06-01"}, {"Id": 3, "Category": "Other", "Amount": "1254", "Description": "earbuds", "Date": "2026-06-01"}, {"Id": 4, "Category": "Bills", "Amount": -300, "Description": "", "Date": "2026-06-02"}]
