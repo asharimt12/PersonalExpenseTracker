@@ -2,18 +2,22 @@ import json
 
 
 class Storage:
-    def save(expense):
-        expense_dict = {
-            'Id':expense.id,
-            'Category':expense.category,
-            'Amount':expense.amount,
-            'Description':expense.description,
-            'Date':expense.date
-        }
-        with open('./data/expenses.json','a') as expense_file:
-            json.dump(expense_dict, expense_file)
+    @staticmethod
+    def save(expenses):
+        try:
+            with open('./data/expenses.json','w') as expense_file:
+                json.dump(expenses, expense_file)
+        except FileNotFoundError as e:
+            raise FileNotFoundError(
+                '/data directory does not exist'
+            ) from e
 
-    def load(self):
-        with open('./data/expenses.json','r') as expense_file:
-            expense_dict = json.load(expense_file)
-            return expense_dict
+    @staticmethod
+    def load():
+        try:
+            with open('./data/expenses.json', 'r') as expense_file:
+                return json.load(expense_file)
+        except FileNotFoundError:
+            return []
+        except json.JSONDecodeError:
+            return []
