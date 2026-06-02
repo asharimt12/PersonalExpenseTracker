@@ -1,32 +1,42 @@
-import datetime
 
-from expense import Expense
+from tabulate import tabulate
 from storage import Storage
 
 
 class Manage_Expense:
-    def __init__(self, category, amount, description):
-        self.id = self.computeId()
-        self.category = category
-        self.amount = amount
-        self.description = description
-
     def computeId(self):
-        return 1
+        expenses = Storage.load()
+        if expenses==[]:
+            return 1
+        else:
+            return expenses[-1]['Id']+1
 
-    def addExpense(self):
-        expense = Expense(
-            id = self.id,
-            category = self.category,
-            amount = self.amount,
-            description = self.description,
-            date=datetime.date.today().isoformat()
-        )
-        Storage.save(expense)
+    def addExpense(self, expense):
+
+        expense_dict = {
+            'Id': expense.id,
+            'Category': expense.category,
+            'Amount': expense.amount,
+            'Description': expense.description,
+            'Date': expense.date
+        }
+
+        expenses = Storage.load()
+        expenses.append(expense_dict)
+        Storage.save(expenses)
 
 
-    def deleteExpense(self):
-        pass
+    def deleteExpense(self, id):
+        expenses = Storage.load()
+        for expense in expenses:
+            if expense['Id']==id:
+                expenses.remove(expense)
+        Storage.save(expenses)
 
     def listExpense(self):
-        pass
+        headers = ['Id', 'Category', 'Amount', 'Description', 'Date']
+        expenses = Storage.load()
+        rows = [[expense['Id'], expense['Category'], expense['Amount'], expense['Description'], expense['Date']]
+                for expense in expenses]
+        table = tabulate(rows, headers=headers, tablefmt="fancy_grid")
+        print('\nExpense List\n' + '\n' + table)
